@@ -4,13 +4,14 @@ import * as Yup from "yup";
 import { baseUrl } from "../../../constant/conastant";
 import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
-import {  useState } from "react";
+import {  useState, useEffect } from "react";
 import { useContext } from "react";
 import { UserContext } from "../../../Context/UserContext";
 import { Button } from "flowbite-react";
+import useDocumentTitle from "../../../hooks/useDocumentTitle";
 
 export default function Login() {
-  document.title = "Login";
+  useDocumentTitle("Login");
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const { setToken } = useContext(UserContext);

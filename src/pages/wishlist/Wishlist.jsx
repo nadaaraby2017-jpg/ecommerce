@@ -2,9 +2,10 @@ import { useContext, useEffect, useState } from "react";
 import { wishlistContext } from "../../Context/WishlistContext";
 import toast, { Toaster } from "react-hot-toast";
 import { cartContext } from "../../Context/CartContext";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 export default function Wishlist() {
-  document.title = "Wishlist";
+  useDocumentTitle("Wishlist");
   const { getWishlistItem, deleteWishlistItem, setWishlist } =
     useContext(wishlistContext);
   const { addToCart, setCart } = useContext(cartContext);

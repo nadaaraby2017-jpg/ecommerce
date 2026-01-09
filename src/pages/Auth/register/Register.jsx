@@ -5,9 +5,10 @@ import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { useEffect, useState } from "react";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 export default function Register() {
-  document.title = "Register";
+  useDocumentTitle("Register");
 
   const navigate = useNavigate();
   const [loading, setLoding] = useState(false);

@@ -2,9 +2,10 @@ import { useContext, useEffect, useState } from "react";
 import { cartContext } from "../../Context/CartContext";
 import toast, { Toaster } from "react-hot-toast";
 import { Link } from "react-router-dom";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 export default function CartPage() {
-  document.title = "Cart";
+  useDocumentTitle("Cart");
 
   const {
     getCartItem,

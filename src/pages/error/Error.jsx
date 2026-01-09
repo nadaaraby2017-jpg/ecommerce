@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import error from "../../assets/error.png";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 export default function Error() {
-
-    document.title = "Error";
+    useDocumentTitle("Error");
 
 
   return (

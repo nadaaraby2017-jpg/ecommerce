@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { baseUrl } from "../../constant/conastant";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 export default function Orders() {
   const [loading, setLoading] = useState(false);
   const [orders, setOrders] = useState(null);
@@ -9,7 +10,7 @@ export default function Orders() {
   const token = localStorage.getItem("token");
   const { id: userId } = jwtDecode(token);
   async function getAllOrders() {
-    document.title = "all orders";
+    useDocumentTitle("All Orders");
     setLoading(true);
     try {
       const { data } = await axios.get(

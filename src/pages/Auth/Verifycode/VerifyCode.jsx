@@ -1,14 +1,15 @@
 import axios from "axios";
 import { useFormik } from "formik";
+import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { baseUrl } from "../../../constant/conastant";
+import useDocumentTitle from "../../../hooks/useDocumentTitle";
 
 export default function VerifyCode() {
 
-    document.title = "Verify Code";
-
+  useDocumentTitle("Verify Code");
 
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);

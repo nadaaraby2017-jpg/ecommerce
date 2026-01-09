@@ -5,9 +5,10 @@ import { baseUrl } from "../../../constant/conastant";
 import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { useEffect, useState } from "react";
+import useDocumentTitle from "../../../hooks/useDocumentTitle";
 
 export default function ResetPassword() {
-  document.title = "Reset Password";
+  useDocumentTitle("Reset Password");
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 

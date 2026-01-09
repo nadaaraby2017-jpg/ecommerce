@@ -3,10 +3,10 @@ import { baseUrl } from "../../constant/conastant";
 import ProductCard from "../../component/productCard/ProductCard";
 import { useEffect, useState } from "react";
 import ProductSkeleton from "../../component/productCard/ProductSkeleton";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 export default function Products() {
-
-    document.title = "Products";
+  useDocumentTitle("Products");
 
 
   const [allProductData, setAllProductData] = useState([]);

@@ -3,10 +3,10 @@ import * as Yup from "yup";
 import toast, { Toaster } from "react-hot-toast";
 import { useContext, useEffect, useState } from "react";
 import { cartContext } from "../../Context/CartContext";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 export default function CheckOut() {
-
-    document.title = "Checkout";
+    useDocumentTitle("Checkout");
 
   const [loading, setLoading] = useState(false);
   const { CheckOut, cartId } = useContext(cartContext);

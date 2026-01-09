@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 import BrandsCard from "../../component/BrandsCard/BrandsCard";
 import BrandSkeleton from "../../component/BrandsCard/BrandSkeleton";
 import { BrandDetails } from "../../component/BrandDetails/BrandDetails";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 export default function Brands() {
-  document.title = "Brands";
+  useDocumentTitle("Brands");
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);

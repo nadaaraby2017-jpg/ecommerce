@@ -3,9 +3,10 @@ import { baseUrl } from "../../constant/conastant";
 import { useEffect, useState } from "react";
 import CategoryCard from "../../component/CategoryCard/CategoryCard";
 import CategorySkeleton from "../../component/CategoryCard/CategorySkeleton";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 export default function Categories() {
-  document.title = "Categories";
+  useDocumentTitle("Categories");
 
   const [allProductData, setAllProductData] = useState([]);
   const [loading, setLoading] = useState(false);

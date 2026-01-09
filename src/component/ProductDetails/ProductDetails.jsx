@@ -6,9 +6,11 @@ import { baseUrl } from "../../constant/conastant";
 import { cartContext } from "../../Context/CartContext";
 import { wishlistContext } from "../../Context/WishlistContext";
 import ProductDetailsSkeleton from './ProductDetailsSkeleton';
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 
 export default function ProductDetails() {
+  useDocumentTitle('Product Details');
   const { productId } = useParams();
   const { addToCart, setCart } = useContext(cartContext);
   const { addToWishlist, setWishlist, deleteWishlistItem } =

@@ -9,9 +9,10 @@ import imgSlider1 from "../../assets/babyCart.jpg";
 import imgSlider2 from "../../assets/bag.jpg";
 import imgSlider3 from "../../assets/accessories.jpg";
 import Products from "../products/Products";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 export default function Home() {
-  document.title = "Home";
+  useDocumentTitle("Home");
   const [allCategories, setAllCategories] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);

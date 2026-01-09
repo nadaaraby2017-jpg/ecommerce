@@ -1,11 +1,7 @@
 import axios from "axios";
-import { useContext, useEffect, useState, useRef } from "react";
+import { useContext, useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useParams } from "react-router-dom";
-import "swiper/css";
-import "swiper/css/effect-cards";
-import { EffectCards } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
 import { baseUrl } from "../../constant/conastant";
 import { cartContext } from "../../Context/CartContext";
 import { wishlistContext } from "../../Context/WishlistContext";
@@ -21,7 +17,7 @@ export default function ProductDetails() {
   const [productData, setProductData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [redHeart, setRedHeart] = useState(false);
-  const swiperRef = useRef(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   async function getProductDetails() {
     setLoading(true);
     try {
@@ -73,20 +69,6 @@ export default function ProductDetails() {
 
   useEffect(() => {
     getProductDetails();
-    
-    return () => {
-      // Cleanup Swiper instances safely
-      try {
-        const swiperElements = document.querySelectorAll('.swiper');
-        swiperElements.forEach(element => {
-          if (element.swiper) {
-            element.swiper.destroy(true, true);
-          }
-        });
-      } catch (error) {
-        console.warn('ProductDetails Swiper cleanup warning:', error);
-      }
-    };
   }, []);
 
   return (
@@ -96,34 +78,58 @@ export default function ProductDetails() {
         <ProductDetailsSkeleton />
       ) : (
         <div className=" flex flex-col justify-around  items-center md:flex-row pt-28">
-          <Swiper
-            ref={swiperRef}
-            key={`product-swiper-${productId}`}
-            effect={"cards"}
-            grabCursor={true}
-            modules={[EffectCards]}
-            className="mySwiper w-80 ms-0"
-            onSwiper={(swiper) => {
-              // Store swiper instance safely
-              if (swiperRef.current) {
-                swiperRef.current.swiper = swiper;
-              }
-            }}
-            onBeforeDestroy={(swiper) => {
-              // Cleanup before destroy
-              try {
-                swiper.removeAllListeners();
-              } catch (error) {
-                console.warn('ProductDetails Swiper cleanup warning:', error);
-              }
-            }}
-          >
-            {productData?.images?.map((img) => (
-              <SwiperSlide key={img}>
-                <img src={img} className="w-full" />
-              </SwiperSlide>
-            ))}
-          </Swiper>
+          {/* Image Gallery */}
+          <div className="w-80 ms-0">
+            {productData?.images?.length > 0 ? (
+              <>
+                <div className="relative">
+                  <img 
+                    src={productData.images[currentImageIndex]} 
+                    alt={`Product image ${currentImageIndex + 1}`}
+                    className="w-full h-80 object-cover rounded-lg"
+                  />
+                  {productData.images.length > 1 && (
+                    <>
+                      <button
+                        onClick={() => setCurrentImageIndex((prev) => (prev - 1 + productData.images.length) % productData.images.length)}
+                        className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70"
+                      >
+                        <i className="fa-solid fa-chevron-left"></i>
+                      </button>
+                      <button
+                        onClick={() => setCurrentImageIndex((prev) => (prev + 1) % productData.images.length)}
+                        className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70"
+                      >
+                        <i className="fa-solid fa-chevron-right"></i>
+                      </button>
+                    </>
+                  )}
+                </div>
+                {/* Thumbnail Gallery */}
+                {productData.images.length > 1 && (
+                  <div className="flex space-x-2 mt-4">
+                    {productData.images.map((img, index) => (
+                      <button
+                        key={img}
+                        onClick={() => setCurrentImageIndex(index)}
+                        className={`flex-shrink-0 w-16 h-16 object-cover rounded ${currentImageIndex === index ? 'ring-2 ring-green-500' : ''}`}
+                      >
+                        <img 
+                          src={img} 
+                          alt={`Thumbnail ${index + 1}`}
+                          className="w-full h-full object-cover rounded"
+                        />
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="w-full h-80 bg-gray-200 rounded-lg flex items-center justify-center">
+                <p className="text-gray-500">No images available</p>
+              </div>
+            )}
+          </div>
           <div className="w-3/4 md:w-1/2">
             <h3 className="py-4 text-4xl font-medium">{productData?.title}</h3>
             <p>{productData?.description}</p>

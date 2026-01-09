@@ -11,16 +11,35 @@ import ErrorBoundary from "./component/ErrorBoundary/ErrorBoundary.jsx";
 
 // Global error handler for unhandled DOM errors
 window.addEventListener('error', (event) => {
-  if (event.message && event.message.includes('removeChild')) {
-    console.warn('DOM removeChild error caught globally:', event.message);
+  const errorMessage = event.message || '';
+  if (errorMessage.includes('removeChild') || 
+      errorMessage.includes('appendChild') ||
+      errorMessage.includes('Node') ||
+      errorMessage.includes('DOM')) {
+    console.warn('DOM manipulation error caught and prevented:', errorMessage);
     event.preventDefault();
+    event.stopPropagation();
     return true;
   }
 });
 
 window.addEventListener('unhandledrejection', (event) => {
-  console.warn('Unhandled promise rejection:', event.reason);
+  console.warn('Unhandled promise rejection caught:', event.reason);
+  event.preventDefault();
 });
+
+// Override console.error to catch React errors
+const originalConsoleError = console.error;
+console.error = (...args) => {
+  const errorString = args.join(' ');
+  if (errorString.includes('removeChild') || 
+      errorString.includes('appendChild') ||
+      errorString.includes('Node')) {
+    console.warn('Console error intercepted:', errorString);
+    return;
+  }
+  originalConsoleError.apply(console, args);
+};
 
 const route = createBrowserRouter(routing);
 

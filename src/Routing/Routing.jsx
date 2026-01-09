@@ -17,6 +17,7 @@ import VerifyCode from "../pages/Auth/Verifycode/VerifyCode";
 import ForgetPassword from "../pages/Auth/ForgetPassword/ForgetPassword";
 import ResetPassword from '../pages/Auth/ResetPassword/ResetPassword';
 import Error from '../pages/error/Error';
+import ErrorBoundary from "../component/ErrorBoundary/ErrorBoundary";
 
 export const routing = [
   {
@@ -30,129 +31,161 @@ export const routing = [
       {
         index: true,
         element: (
-          <ProtectedRoutes>
-            <Home />
-          </ProtectedRoutes>
+          <ErrorBoundary>
+            <ProtectedRoutes>
+              <Home />
+            </ProtectedRoutes>
+          </ErrorBoundary>
         ),
       },
       {
         path: "home",
         element: (
-          <ProtectedRoutes>
-            <Home />
-          </ProtectedRoutes>
+          <ErrorBoundary>
+            <ProtectedRoutes>
+              <Home />
+            </ProtectedRoutes>
+          </ErrorBoundary>
         ),
       },
       {
         path: "cart",
         element: (
-          <ProtectedRoutes>
-            <Cart />
-          </ProtectedRoutes>
+          <ErrorBoundary>
+            <ProtectedRoutes>
+              <Cart />
+            </ProtectedRoutes>
+          </ErrorBoundary>
         ),
       },
       {
         path: "wishlist",
         element: (
-          <ProtectedRoutes>
-            <Wishlist />
-          </ProtectedRoutes>
+          <ErrorBoundary>
+            <ProtectedRoutes>
+              <Wishlist />
+            </ProtectedRoutes>
+          </ErrorBoundary>
         ),
       },
       {
         path: "products",
         element: (
-          <ProtectedRoutes>
-            <Products />
-          </ProtectedRoutes>
+          <ErrorBoundary>
+            <ProtectedRoutes>
+              <Products />
+            </ProtectedRoutes>
+          </ErrorBoundary>
         ),
       },
       {
         path: "product/:productId",
         element: (
-          <ProtectedRoutes>
-            <ProductDetails />
-          </ProtectedRoutes>
+          <ErrorBoundary>
+            <ProtectedRoutes>
+              <ProductDetails />
+            </ProtectedRoutes>
+          </ErrorBoundary>
         ),
       },
       {
         path: "categories",
         element: (
-          <ProtectedRoutes>
-            <Categories />
-          </ProtectedRoutes>
+          <ErrorBoundary>
+            <ProtectedRoutes>
+              <Categories />
+            </ProtectedRoutes>
+          </ErrorBoundary>
         ),
       },
       {
         path: "brands",
         element: (
-          <ProtectedRoutes>
-            <Brands />
-          </ProtectedRoutes>
+          <ErrorBoundary>
+            <ProtectedRoutes>
+              <Brands />
+            </ProtectedRoutes>
+          </ErrorBoundary>
         ),
       },
       {
         path: "checkout",
         element: (
-          <ProtectedRoutes>
-            <CheckOut />
-          </ProtectedRoutes>
+          <ErrorBoundary>
+            <ProtectedRoutes>
+              <CheckOut />
+            </ProtectedRoutes>
+          </ErrorBoundary>
         ),
       },
       {
         path: "allorders",
         element: (
-          <ProtectedRoutes>
-            <Orders />
-          </ProtectedRoutes>
+          <ErrorBoundary>
+            <ProtectedRoutes>
+              <Orders />
+            </ProtectedRoutes>
+          </ErrorBoundary>
         ),
       },
       {
         path: "login",
         element: (
-          <ProtectedAuthRoutes>
-            <Login />
-          </ProtectedAuthRoutes>
+          <ErrorBoundary>
+            <ProtectedAuthRoutes>
+              <Login />
+            </ProtectedAuthRoutes>
+          </ErrorBoundary>
         ),
       },
       {
         path: "forgetPassword",
         element: (
-          <ProtectedAuthRoutes>
-            <ForgetPassword />
-          </ProtectedAuthRoutes>
+          <ErrorBoundary>
+            <ProtectedAuthRoutes>
+              <ForgetPassword />
+            </ProtectedAuthRoutes>
+          </ErrorBoundary>
         ),
       },
       {
         path: "verifyCode",
         element: (
-          <ProtectedAuthRoutes>
-            <VerifyCode />
-          </ProtectedAuthRoutes>
+          <ErrorBoundary>
+            <ProtectedAuthRoutes>
+              <VerifyCode />
+            </ProtectedAuthRoutes>
+          </ErrorBoundary>
         ),
       },
       {
         path: "resetpassword",
         element: (
-          <ProtectedAuthRoutes>
-            <ResetPassword />
-          </ProtectedAuthRoutes>
+          <ErrorBoundary>
+            <ProtectedAuthRoutes>
+              <ResetPassword />
+            </ProtectedAuthRoutes>
+          </ErrorBoundary>
         ),
       },
       {
         path: "register",
         element: (
-          <ProtectedAuthRoutes>
-            <Register />
-          </ProtectedAuthRoutes>
+          <ErrorBoundary>
+            <ProtectedAuthRoutes>
+              <Register />
+            </ProtectedAuthRoutes>
+          </ErrorBoundary>
         ),
       },
       {
         path: "*",
         element: (
-          <ProtectedRoutes>
-            <Error />
-          </ProtectedRoutes>
+          <ErrorBoundary>
+            <ProtectedRoutes>
+              <Error />
+            </ProtectedRoutes>
+          </ErrorBoundary>
         ),
       },
     ],

@@ -9,6 +9,56 @@ import CartContextProvider from "./Context/CartContext.jsx";
 import WishlistContextProvider from "./Context/WishlistContext.jsx";
 import ErrorBoundary from "./component/ErrorBoundary/ErrorBoundary.jsx";
 
+// Ultra-aggressive global error handler for DOM manipulation
+(function() {
+  // Store original methods
+  const originalRemoveChild = Node.prototype.removeChild;
+  const originalAppendChild = Node.prototype.appendChild;
+  const originalInsertBefore = Node.prototype.insertBefore;
+  const originalReplaceChild = Node.prototype.replaceChild;
+  
+  // Override DOM methods to catch errors
+  Node.prototype.removeChild = function(child) {
+    try {
+      if (!child || !this.contains(child)) {
+        console.warn('Prevented invalid removeChild operation');
+        return child;
+      }
+      return originalRemoveChild.call(this, child);
+    } catch (error) {
+      console.warn('removeChild error caught:', error.message);
+      return child;
+    }
+  };
+  
+  Node.prototype.appendChild = function(child) {
+    try {
+      return originalAppendChild.call(this, child);
+    } catch (error) {
+      console.warn('appendChild error caught:', error.message);
+      return child;
+    }
+  };
+  
+  Node.prototype.insertBefore = function(newNode, referenceNode) {
+    try {
+      return originalInsertBefore.call(this, newNode, referenceNode);
+    } catch (error) {
+      console.warn('insertBefore error caught:', error.message);
+      return newNode;
+    }
+  };
+  
+  Node.prototype.replaceChild = function(newChild, oldChild) {
+    try {
+      return originalReplaceChild.call(this, newChild, oldChild);
+    } catch (error) {
+      console.warn('replaceChild error caught:', error.message);
+      return newChild;
+    }
+  };
+})();
+
 // Enhanced global error handler for unhandled DOM errors
 window.addEventListener('error', (event) => {
   const errorMessage = event.message || '';

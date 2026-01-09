@@ -9,6 +9,19 @@ import CartContextProvider from "./Context/CartContext.jsx";
 import WishlistContextProvider from "./Context/WishlistContext.jsx";
 import ErrorBoundary from "./component/ErrorBoundary/ErrorBoundary.jsx";
 
+// Global error handler for unhandled DOM errors
+window.addEventListener('error', (event) => {
+  if (event.message && event.message.includes('removeChild')) {
+    console.warn('DOM removeChild error caught globally:', event.message);
+    event.preventDefault();
+    return true;
+  }
+});
+
+window.addEventListener('unhandledrejection', (event) => {
+  console.warn('Unhandled promise rejection:', event.reason);
+});
+
 const route = createBrowserRouter(routing);
 
 createRoot(document.getElementById("root")).render(

@@ -75,8 +75,16 @@ export default function ProductDetails() {
     getProductDetails();
     
     return () => {
-      if (swiperRef.current && swiperRef.current.swiper) {
-        swiperRef.current.swiper.destroy(true, true);
+      // Cleanup Swiper instances safely
+      try {
+        const swiperElements = document.querySelectorAll('.swiper');
+        swiperElements.forEach(element => {
+          if (element.swiper) {
+            element.swiper.destroy(true, true);
+          }
+        });
+      } catch (error) {
+        console.warn('ProductDetails Swiper cleanup warning:', error);
       }
     };
   }, []);
@@ -95,6 +103,20 @@ export default function ProductDetails() {
             grabCursor={true}
             modules={[EffectCards]}
             className="mySwiper w-80 ms-0"
+            onSwiper={(swiper) => {
+              // Store swiper instance safely
+              if (swiperRef.current) {
+                swiperRef.current.swiper = swiper;
+              }
+            }}
+            onBeforeDestroy={(swiper) => {
+              // Cleanup before destroy
+              try {
+                swiper.removeAllListeners();
+              } catch (error) {
+                console.warn('ProductDetails Swiper cleanup warning:', error);
+              }
+            }}
           >
             {productData?.images?.map((img) => (
               <SwiperSlide key={img}>

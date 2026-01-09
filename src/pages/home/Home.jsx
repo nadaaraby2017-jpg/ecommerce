@@ -36,8 +36,16 @@ export default function Home() {
     getAllCategories();
     
     return () => {
-      if (swiperRef.current && swiperRef.current.swiper) {
-        swiperRef.current.swiper.destroy(true, true);
+      // Cleanup Swiper instances safely
+      try {
+        const swiperElements = document.querySelectorAll('.swiper');
+        swiperElements.forEach(element => {
+          if (element.swiper) {
+            element.swiper.destroy(true, true);
+          }
+        });
+      } catch (error) {
+        console.warn('Swiper cleanup warning:', error);
       }
     };
   }, []);
@@ -55,6 +63,20 @@ export default function Home() {
           }}
           modules={[Pagination]}
           className="mySwiper !mx-2 md:w-72 h-[480px] "
+          onSwiper={(swiper) => {
+            // Store swiper instance safely
+            if (swiperRef.current) {
+              swiperRef.current.swiper = swiper;
+            }
+          }}
+          onBeforeDestroy={(swiper) => {
+            // Cleanup before destroy
+            try {
+              swiper.removeAllListeners();
+            } catch (error) {
+              console.warn('Swiper listener cleanup warning:', error);
+            }
+          }}
         >
           <SwiperSlide>
             <img
@@ -111,6 +133,17 @@ export default function Home() {
           }}
           modules={[Autoplay, Pagination]}
           className="mySwiper h-80"
+          onBeforeDestroy={(swiper) => {
+            // Cleanup before destroy
+            try {
+              swiper.removeAllListeners();
+              if (swiper.autoplay) {
+                swiper.autoplay.stop();
+              }
+            } catch (error) {
+              console.warn('Categories Swiper cleanup warning:', error);
+            }
+          }}
         >
           {allCategories.map((categories) => (
             <SwiperSlide key={categories._id}>

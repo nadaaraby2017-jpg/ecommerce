@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import "swiper/css";
@@ -21,6 +21,7 @@ export default function ProductDetails() {
   const [productData, setProductData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [redHeart, setRedHeart] = useState(false);
+  const swiperRef = useRef(null);
   async function getProductDetails() {
     setLoading(true);
     try {
@@ -72,6 +73,12 @@ export default function ProductDetails() {
 
   useEffect(() => {
     getProductDetails();
+    
+    return () => {
+      if (swiperRef.current && swiperRef.current.swiper) {
+        swiperRef.current.swiper.destroy(true, true);
+      }
+    };
   }, []);
 
   return (
@@ -82,6 +89,8 @@ export default function ProductDetails() {
       ) : (
         <div className=" flex flex-col justify-around  items-center md:flex-row pt-28">
           <Swiper
+            ref={swiperRef}
+            key={`product-swiper-${productId}`}
             effect={"cards"}
             grabCursor={true}
             modules={[EffectCards]}

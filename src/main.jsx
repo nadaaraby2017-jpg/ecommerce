@@ -7,15 +7,18 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { routing } from "./Routing/Routing.jsx";
 import CartContextProvider from "./Context/CartContext.jsx";
 import WishlistContextProvider from "./Context/WishlistContext.jsx";
+import ErrorBoundary from "./component/ErrorBoundary/ErrorBoundary.jsx";
 
 const route = createBrowserRouter(routing);
 
 createRoot(document.getElementById("root")).render(
-  <WishlistContextProvider>
-    <CartContextProvider>
-      <RouterProvider router={route}>
-        <App />
-      </RouterProvider>
-    </CartContextProvider>
-  </WishlistContextProvider>
+  <ErrorBoundary>
+    <WishlistContextProvider>
+      <CartContextProvider>
+        <RouterProvider router={route}>
+          <App />
+        </RouterProvider>
+      </CartContextProvider>
+    </WishlistContextProvider>
+  </ErrorBoundary>
 );

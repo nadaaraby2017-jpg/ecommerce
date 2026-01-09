@@ -1,7 +1,7 @@
 import axios from "axios";
 import { baseUrl } from "../../constant/conastant";
 import ProductCard from "../../component/productCard/ProductCard";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import ProductSkeleton from "../../component/productCard/ProductSkeleton";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -18,6 +18,7 @@ export default function Home() {
   document.title = "Home";
   const [allCategories, setAllCategories] = useState([]);
   const [loading, setLoading] = useState(false);
+  const swiperRef = useRef(null);
 
   async function getAllCategories() {
     setLoading(true);
@@ -33,12 +34,20 @@ export default function Home() {
   }
   useEffect(() => {
     getAllCategories();
+    
+    return () => {
+      if (swiperRef.current && swiperRef.current.swiper) {
+        swiperRef.current.swiper.destroy(true, true);
+      }
+    };
   }, []);
 
   return (
     <div className="container mx-auto pt-32">
       <div className="flex flex-col md:flex-row justify-center">
         <Swiper
+          ref={swiperRef}
+          key="main-swiper"
           slidesPerView={1}
           spaceBetween={0}
           pagination={{
@@ -76,6 +85,7 @@ export default function Home() {
       </div>
       <div className="pt-80 md:pt-20">
         <Swiper
+          key="categories-swiper"
           slidesPerView={2}
           spaceBetween={0}
           pagination={{
